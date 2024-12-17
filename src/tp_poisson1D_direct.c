@@ -57,6 +57,7 @@ int main(int argc,char *argv[])
   write_vec(EX_SOL, &la, "EX_SOL.dat");
   write_vec(X, &la, "X_grid.dat");
 
+  // kv=0;
   kv=1;
   ku=1;
   kl=1;
@@ -86,6 +87,9 @@ int main(int argc,char *argv[])
   /* LU for tridiagonal matrix  (can replace dgbtrf_) */
   if (IMPLEM == TRI) {
     dgbtrftridiag(&la, &la, &kl, &ku, AB, &lab, ipiv, &info);
+    // if (info!=0){printf("\n INFO dgbtridiag = %d\n",info);}
+
+
   }
 
   if (IMPLEM == TRI || IMPLEM == TRF){

@@ -63,6 +63,7 @@ int main(int argc,char *argv[])
   write_vec(X, &la, "X_grid.dat");
 
   kv=0;
+  // kv=1;
   ku=1;
   kl=1;
   lab=kv+kl+ku+1;

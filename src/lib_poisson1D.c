@@ -144,12 +144,91 @@ void set_grid_points_1D(double* x, int* la){
 }
 
 double relative_forward_error(double* x, double* y, int* la){
+  /*in this case x is the exact solution and y is the prediction */
+  /*we set up : */
+  /*Relative_forward_error = ||x -xpred || / ||x||*/
+
+
+  double sumofdif =0; /* we calculate ||x -xpred||*/
+  double sumofx =0; /* we calculate ||x||*/
+  
+  // double sumofx
+
+  for(int i =0  ; i < *la ; i++){
+    sumofdif += (x[i]-y[i])*(x[i]-y[i]); 
+    sumofx += x[i]*x[i]; 
+  }
+
+  sumofdif = sqrt(sumofdif);
+  sumofx = sqrt(sumofx);
+
+  if (sumofx==0){
+    printf("The vector x provided is null \n"); 
+    return -1;
+  }
+
+
+  printf("this is the diff error %f\n", sumofdif);
+  return sumofdif/sumofx; /*error calcul*/
+
 }
 
 int indexABCol(int i, int j, int *lab){
-  return 0;
+
+  int index=0; 
+  /*The role of this function is too return the position of the value of index i,j */
+  /*in a Colmajor matrix */
+
+  /*we have to account for multiple cases */
+
+  /*CASE1 i,j is not on the tridiagonal*/
+
+  if (abs(i-j) > 1){
+    return 0; /*we chose 0 as in AB the value at position 0 is also 0 so looking at 
+    this place for value is the same as looking at other place not on the triadiagonals */
+  }
+
+  /*CASE2 i,j is on the tridiagonal*/
+
+  /*CASE UPER diagonal */
+  if (j == i + 1)        /*we multiply by 3 but *lab works too */
+    // index = 3 * j - 1;
+    index = (*lab) * j - 1;
+
+  /*CASE main diagonal */
+  else if(j==i){
+    // index = 3*j
+    index = (*lab) * j ;
+    
+  } 
+
+  else if (j= i-1){
+    // index = 3 * j + 1;
+    index = (*lab) * j + 1; 
+
+  }
+
+
+  return index;
 }
+
+
+
 /**/
 int dgbtrftridiag(int *la, int*n, int *kl, int *ku, double *AB, int *lab, int *ipiv, int *info){
+
+  /*we are gonna implement Thomas algorithm named after Llewellyn Thomas*/
+  /*that describe how to implement a specialised LU factorisation for triadiagonal matrix*/
+
+  if (*kl != 1 || *ku != 1) {
+    printf("\n The matrix chosen is not tridiagonal\n");
+    *info = -1;
+    return *info;
+  }
+
+  u[0] = b[0];
+
   return *info;
 }/*to implement this one you need to implement all the ones before */
+
+
