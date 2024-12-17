@@ -4,6 +4,8 @@
 /* to solve the Poisson 1D problem        */
 /******************************************/
 #include "lib_poisson1D.h"
+#include <time.h>
+
 
 #define TRF 0
 #define TRI 1
@@ -65,6 +67,14 @@ int main(int argc,char *argv[])
   set_GB_operator_colMajor_poisson1D(AB, &lab, &la, &kv);
   write_GB_operator_colMajor_poisson1D(AB, &lab, &la, "AB.dat");
 
+  double *Id; 
+  Id = (double *) malloc(sizeof(double)*lab*la);
+  set_GB_operator_colMajor_poisson1D_Id(Id, &lab, &la, &kv);
+  write_GB_operator_colMajor_poisson1D(Id, &lab, &la, "ID.dat");
+
+  
+  // write_GB_operator_rowMajor_poisson1D(AB, &lab, &la, "AB.dat");
+
   printf("Solution with LAPACK\n");
   ipiv = (int *) calloc(la, sizeof(int));
 
@@ -89,8 +99,25 @@ int main(int argc,char *argv[])
   }
 
   /* It can also be solved with dgbsv */
-  if (IMPLEM == SV) {
+  if (IMPLEM == SV) { /*exercice 5*/
     // TODO : use dgbsv
+    // dgbsv_
+    // dgbsv_(&la, &kl, &ku, &NRHS, AB, &lab, ipiv, RHS, &la, &info);
+
+
+
+    clock_t start, end; 
+    double cpu_time_used;
+
+    start = clock();
+    dgbsv_(&la, &kl, &ku, &NRHS, AB, &lab, ipiv, RHS, &la, &info);
+    /*return value in info*/
+    end = clock();
+
+    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    printf("Time used by DGBSV: %f seconds\n", cpu_time_used);
+
+
   }
 
   write_GB_operator_colMajor_poisson1D(AB, &lab, &la, "LU.dat");
