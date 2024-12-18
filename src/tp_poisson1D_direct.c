@@ -122,6 +122,10 @@ int main(int argc,char *argv[])
     printf("Time used by DGBSV: %f seconds\n", cpu_time_used);
 
 
+    /* we could plot the difference of time between dgbsv and the combination of dgbtrs_
+    and dgbtrf_ */
+
+
   }
 
   write_GB_operator_colMajor_poisson1D(AB, &lab, &la, "LU.dat");
