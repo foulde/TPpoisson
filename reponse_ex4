@@ -1,0 +1,8 @@
+ Exercice 4. Stockage GB et appel `a DGBMV
+1. ´Ecrire le stockage GB en priorit´e colonne pour la matrice de Poisson 1D.
+2. Utilisez la fonction BLAS dgbmv avec cette matrice.
+3. Proposez une m´ethode de validation
+
+
+pour la validation on sait que en mulitpliant la matrice par un vecteur unitaire on est censé obtenir 
+un vecteur nulle sauf pour la premiere et derniere entrée du vecteur 

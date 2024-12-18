@@ -1,0 +1,65 @@
+Exercice 3. R´ef´erence et utilisation de BLAS/LAPACK
+A l’aide de la documentation de BLAS et LAPACK r´epondez aux questions suivantes :
+1. En C, comment doit on d´eclarer et allouer une matrice pour utiliser BLAS et LAPACK
+?
+
+// les matrices sont stocker sous formes de tableau 1D 
+// pour une matrice de taille mxn 
+// on créer un tableau de taille A[m * n]; 
+
+
+2. Quelle est la signification de la constante LAPACK COL MAJOR ?
+La fonctionnalité LAPACK_COL_MAJOR permet préciser le format de stockage d'une matrice 
+si on passe colmajor la matrice sera stocker sur une ligne colonne par colonne comme ceci :
+[a1,a2,a3,a4,a5,a6,a7,a8,a9]
+ 
+
+3. `A quoi correspond la dimension principale (leading dimension) g´en´eralement not´ee ld ?
+celle ci dépend de si le tableau est stocké en row major ou column major 
+-si on se trouve en COLUMN_major cela correspond au nombre total d'élement alloué en mémoire 
+pour une colonne mémoire.
+donc le nombre de lignes
+
+
+
+-si on se trouve en ROW_major cela correspond au nombre total d'élement alloué en mémoire 
+pour une colonne mémoire.
+donc le nombre de colonnes 
+
+
+4. Que fait la fonction dgbmv ? Quelle m´ethode impl´emente-t-elle ?
+DGBMV  performs one of the matrix-vector operations
+
+    y := alpha*A*x + beta*y,   or   y := alpha*A**T*x + beta*y,
+Cette fonction est optimisé pour les multiplication de matrice bande
+au format spécifique bande ku .
+
+
+
+
+
+5. Que fait la fonction dgbtrf ? Quelle m´ethode impl´emente-t-elle ?
+Optimiser pour les matrices bandes cette fonction applique une elemination de gauss avec pivot partielle.
+En tirant partie de sa structure en bande.
+cette fonction créer une factorisation LU  pour une matrice bande.
+
+6. Que fait la fonction dgbtrs ? Quelle m´ethode impl´emente-t-elle ?
+
+Est une fonciton optimiser pour les matrice bande factorisé au format PLU
+cette fonction résoud un système déjà factorisé LUx =y.
+
+
+7. Que fait la fonction dgbsv ? Quelle méthode implémente-t-elle ?
+cette fonction combine en une les fonction dgbtrf et dgbtrs 
+Elle résoud le système  
+
+
+8. Comment calculer la norme du r´esidu relatif avec des appels BLAS ?
+
+
+|| x - xpred||/||x||
+
+On pourrait utiliser DGBSV sur la matrice A et le vecteur b pour obtenir xpred et calculer l'erreur avant 
+
+
+
