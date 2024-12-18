@@ -257,3 +257,6 @@ int dgbtrftridiag(int *la, int *n, int *kl, int *ku, double *AB, int *lab, int *
 
   return 0; 
 }
+
+/*en methode de validation on peut comparer avec l'erreur avant et quand on descend en dessous de 1e-6
+on valide */
