@@ -202,7 +202,7 @@ int indexABCol(int i, int j, int *lab){
     
   } 
 
-  else if (j= i-1){
+  else if (j== i-1){
     // index = 3 * j + 1;
     index = (*lab) * j + 1; 
 
@@ -214,21 +214,46 @@ int indexABCol(int i, int j, int *lab){
 
 
 
-/**/
-int dgbtrftridiag(int *la, int*n, int *kl, int *ku, double *AB, int *lab, int *ipiv, int *info){
+int dgbtrftridiag(int *la, int *n, int *kl, int *ku, double *AB, int *lab, int *ipiv, int *info) {
+  double factor;
+  *info = 0;
 
-  /*we are gonna implement Thomas algorithm named after Llewellyn Thomas*/
-  /*that describe how to implement a specialised LU factorisation for triadiagonal matrix*/
-
-  if (*kl != 1 || *ku != 1) {
-    printf("\n The matrix chosen is not tridiagonal\n");
-    *info = -1;
-    return *info;
+  // Validate that the matrix is tridiagonal
+  if ((*kl)!= 1 ||  (*ku) != 1) {
+      *info = -1;
+      printf("\nthis matrix is not tridiag\n");
+      return -1;
   }
 
-  u[0] = b[0];
+  // LU factorization loop
+  for (int i = 0; i < *n - 1; i++) {
 
-  return *info;
-}/*to implement this one you need to implement all the ones before */
+    // Get diagonal and subdiagonal indices using indexABCol
+    int diag_index = indexABCol(i, i, lab);           // Main diagonal A[i, i]
+    int subdiag_index = indexABCol(i + 1, i, lab);    // Subdiagonal A[i + 1, i]
+    int next_diag_index = indexABCol(i + 1, i + 1, lab); // Next diagonal A[i + 1, i + 1]
 
+    // Check for zero pivot
+    if (AB[diag_index] == 0.0) {
+        *info = i + 1; // Report the problematic pivot
+        return -1;
+        }
 
+    //   factor computation
+    factor = AB[subdiag_index] / AB[diag_index];
+
+    // we put  the factor in the  subdiagonal 
+    AB[subdiag_index] = factor;
+
+      // Update the diagonal of the next row
+      int superdiag_index = indexABCol(i, i + 1, lab); // Superdiagonal A[i, i+1]
+      AB[next_diag_index] -= factor * AB[superdiag_index];
+  }
+
+  // Initialize the pivot array
+  for (int i = 0; i < *n; i++) {
+      ipiv[i] = i + 1;
+  }
+
+  return 0; 
+}
