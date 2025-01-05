@@ -81,8 +81,10 @@ void richardson_alpha(double *AB, double *RHS, double *X, double *alpha_rich, in
 
     ///////////////////////////////////////////////////////////
 
-    cblas_dcopy(*la , residus,1,RHS,1);  /*on stocke b dans le residus de la fonction
-  et après on soustrera AX*/
+    cblas_dcopy(*la, RHS, 1, residus, 1);
+
+    // cblas_dcopy(*la , residus,1,RHS,1);  /*on stocke b dans le residus de la fonction
+  // et après on soustrera AX*/
 
     nresidus = cblas_dnrm2(*la ,residus , 1); 
     cblas_dgbmv(CblasColMajor , CblasNoTrans ,*la , *la , *kl , *ku, -1.0 , AB , *lab, X ,1 ,1.0 ,residus,1); 
@@ -101,30 +103,50 @@ void richardson_alpha(double *AB, double *RHS, double *X, double *alpha_rich, in
 
   free (residus); 
      
-  }
-  // /*xkp1= xk + alpha(b-Ax)      */ 
-  // /*X -> X + alpha*(b-A*X)      */ 
-  // *nbite =0; 
-  // for (int iteration =0 ; iteration < *maxit ; i++){
-  //   /* appel function b-A*X  */
-  //   /* appel function RHS-A*X  */
+}
+
+
+//   // /*xkp1= xk + alpha(b-Ax)      */ 
+//   // /*X -> X + alpha*(b-A*X)      */ 
+//   // *nbite =0; 
+//   // for (int iteration =0 ; iteration < *maxit ; i++){
+//   //   /* appel function b-A*X  */
+//   //   /* appel function RHS-A*X  */
     
     
-  //   for (int i =0 ; i <*la ; i++){
-  //     for(int j =0 ; j<){
+//   //   for (int i =0 ; i <*la ; i++){
+//   //     for(int j =0 ; j<){
 
-  //     }
-  //     X[i] = 
+//   //     }
+//   //     X[i] = 
 
-  //   }
+//   //   }
 
-  //   *nbite ++; 
+//   //   *nbite ++; 
 
-  // }
+//   // }
 
 
 
-// xkp1 = xk
+// // xkp1 = xk
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 void extract_MB_jacobi_tridiag(double *AB, double *MB, int *lab, int *la,int *ku, int*kl, int *kv){
