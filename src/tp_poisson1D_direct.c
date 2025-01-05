@@ -123,7 +123,7 @@ int main(int argc,char *argv[])
 
 
     /* we could plot the difference of time between dgbsv and the combination of dgbtrs_
-    and dgbtrf_ */
+    and dgbtrf_    */
 
 
   }

@@ -119,6 +119,13 @@ int main(int argc,char *argv[])
   /* Write convergence history */
   write_vec(resvec, &nbite, "RESVEC.dat");
 
+
+  /* Relative forward error */
+  relres = relative_forward_error(RHS, EX_SOL, &la);
+  
+  printf("\nThe relative forward error is relres = %e\n",relres);
+
+  
   free(resvec);
   free(RHS);
   free(SOL);

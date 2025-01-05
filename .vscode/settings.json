@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "lib_poisson1d.h": "c",
+        "random": "c",
+        "limits": "c",
+        "algorithm": "c"
+    }
+}
